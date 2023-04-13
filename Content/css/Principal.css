@@ -1,0 +1,23 @@
+﻿body {
+    background: url('https://i.pinimg.com/originals/95/33/79/9533794df04871f13da3bfa1223b187b.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.letra {
+    color: #ffffff;
+    text-align: end;
+    font-family: fantasy;
+    padding: 200px;
+}
+
+div.div_image {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}

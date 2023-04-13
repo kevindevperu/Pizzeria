@@ -1,0 +1,217 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/js/popper.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="~/css/estilos2.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>Proceso de Pago</title>
+
+</head>
+
+<style>
+    .btn {
+        font-family: fantasy;
+        color: #050505;
+    }
+
+</style>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row justify-content-between mb-5">
+                <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                    <a class="navbar-brand" href="index.html">PIZZERIA QUEHUA'S</a>
+                    <button class="pull-right" style="background-color: #fa4848; color: #050505; border: 1px solid red; padding: 5px 10px; border-radius: 5px; cursor: pointer; text-decoration: none; float: right !important; text-align: center; position: absolute; right: 0 ">
+                        @Html.ActionLink("CERRAR SESION", "CerrarSesion", "Home", null, new { @class = "btn" })
+                    </button>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <br>
+
+    <main>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col">
+                    <h2 class="d-flex justify-content-center mb-3">REALIZAR COMPRA</h2>
+                    <form id="procesar-pago">
+                        <div class="form-group row">
+                            <label for="cliente" class="col-12 col-md-2 col-form-label h2">Cliente :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="cliente"
+                                       placeholder="Ingresa nombre cliente" name="destinatario">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-12 col-md-2 col-form-label h2">Correo :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo" name="cc_to">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="dire" class="col-12 col-md-2 col-form-label h2">Direccion :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu direccion" name="dire">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="numero" class="col-12 col-md-2 col-form-label h2">Tarjetas Aceptadas :</label>
+                            <div class="col-12 col-md-10">
+                                <img style="height: 40px; margin-top: 5px; filter: drop-shadow(0 0 1px #000);" src="https://www.iberspain.com/img/cms/Tarjetas-TPV-bbva.gif" alt="">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Numero" class="col-12 col-md-2 col-form-label h2">Numero de Tarjeta :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="Numero" placeholder="Ingresa tu Numero de Tarjeta" name="num">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="vig" class="col-12 col-md-2 col-form-label h2">Vigencia :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="vigencia" placeholder="10/15" name="vig">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cvv" class="col-12 col-md-2 col-form-label h2">CVV :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="password" class="form-control" id="cvv" placeholder="159" name="cvv">
+                            </div>
+                        </div>
+
+                        <div id="carrito" class="form-group table-responsive">
+                            <table class="form-group table" id="lista-compra">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Sub Total</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">SUB TOTAL :</th>
+                                    <th scope="col">
+                                        <p id="subtotal"></p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">MONTO DELIVERY :</th>
+                                    <th scope="col">
+                                        <p id="igv"></p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">TOTAL :</th>
+                                    <th scope="col">
+                                        <input id="total" name="monto" class="font-weight-bold border-0" readonly style="background-color: white;"></input>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="row justify-content-between">
+                            <div class="col-md-4 mb-2">
+                                <a href="Index" class="btn btn-info btn-block">Seguir comprando</a>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <input type="submit" class="btn btn-success btn-block" id="procesar-compra" value="Realizar compra">
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="https://png.pngtree.com/png-vector/20221225/ourmid/pngtree-pizza-logo-design-png-image_6537333.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2 style="font-family: fantasy; text-align: center; margin-bottom: 25px; font-size: 45px; ">PIZZERIA QUESUA'S'</h2>
+                <h3 style="color:black; font-weight: bold; font-size: 20px; text-align: center;">No es solo pizza, es una combinación de felicidad y alegría.</h3>
+                <h3 style="color: black; font-weight: bold; font-size: 20px; text-align: center;">Creando adictos a la pizza desde 2013.</h3>
+                <h3 style="color: black; font-weight: bold; font-size: 20px; text-align: center;">!!Le damos sabor a tu vida!!</h3>
+            </div>
+            <div class="box">
+                <h2 style="font-family: fantasy; margin-bottom: 25px; font-size: 30px; ">SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/" class="fa fa-facebook"></a>
+                    <a href="https://www.instagram.com/" class="fa fa-instagram"></a>
+                    <a href="https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoiZXMifQ%3D%3D%22%7D" class="fa fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2023 <b>Pizzeria Queshua's</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+
+
+
+    </div>
+
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <script src="~/js/carrito.js"></script>
+    <script src="../../js/compra.js"></script>
+
+
+    <!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script> -->
+
+
+
+
+</body>
+
+</html>
