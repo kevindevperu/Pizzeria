@@ -1,0 +1,90 @@
+CREATE TABLE Cliente (
+  idCliente INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  direccion VARCHAR(100) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  PRIMARY KEY (idCliente)
+);
+
+CREATE TABLE Pizza (
+  idPizza INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  idTamaño INT NOT NULL,
+  precio DECIMAL(6,2) NOT NULL,
+  PRIMARY KEY (idPizza),
+  FOREIGN KEY (idTamaño) REFERENCES TamañoPizza(idTamaño)
+);
+
+CREATE TABLE TamañoPizza (
+	idTamaño INT NOT NULL IDENTITY(1,1),
+	descripcion VARCHAR(60) NOT NULL,
+	PRIMARY KEY (idTamaño)
+);
+
+CREATE TABLE Bebida (
+  idBebida INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(200) NOT NULL,
+  precio DECIMAL(6,2) NOT NULL,
+  PRIMARY KEY (idBebida)
+);
+
+CREATE TABLE Factura (
+	idFactura INT NOT NULL IDENTITY(1,1),
+	numeroFactura INT NOT NULL,
+	fecha_hora DATE NOT NULL,
+	idMetodoPago INT NOT NULL,
+	PRIMARY KEY (idFactura),
+	FOREIGN KEY (idMetodoPago) REFERENCES MetodoPago(idMetodoPago)
+);
+
+CREATE TABLE MetodoPago(
+	idMetodoPago INT NOT NULL IDENTITY(1,1),
+	tipoPago VARCHAR(50) NOT NULL,
+	PRIMARY KEY (idMetodoPago)
+);
+
+CREATE TABLE Delivery(
+	idDelivery INT NOT NULL IDENTITY(1,1),
+	nombre VARCHAR(50) NOT NULL,
+	apellido VARCHAR(70) NOT NULL,
+	dni INT NOT NULL,
+	telefono INT NOT NULL,
+	numeroCarnet INT NOT NULL
+	PRIMARY KEY (idDelivery)
+);
+
+CREATE TABLE Local(
+	idLocal INT NOT NULL IDENTITY(1,1),
+	direccion VARCHAR(40) NOT NULL,
+	telefono INT NOT NULL
+	PRIMARY KEY (idLocal)
+);
+
+
+CREATE TABLE PedidoDetalle(
+	idPedidoDetalle INT NOT NULL IDENTITY(1,1),
+	idPizza INT NOT NULL,
+	idBebida INT NOT NULL,
+	subTotal FLOAT NOT NULL,
+	PRIMARY KEY (idPedidoDetalle),
+	FOREIGN KEY (idPizza) REFERENCES Pizza(idPizza),
+	FOREIGN KEY (idBebida) REFERENCES Bebida(idBebida)
+);
+
+CREATE TABLE Pedido(
+	idPedido INT NOT NULL IDENTITY(1,1),
+	Fecha_Hora DATE NOT NULL,
+	idCliente INT NOT NULL,
+	idDelivery INT NOT NULL,
+	idLocal INT NOT NULL,
+	idPedidoDetalle INT NOT NULL,
+	idFactura INT NOT NULL,
+	total INT NOT NULL,
+	PRIMARY KEY (idPedido),
+	FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+	FOREIGN KEY (idDelivery) REFERENCES Delivery(idDelivery),
+	FOREIGN KEY (idLocal) REFERENCES Local(idLocal),
+	FOREIGN KEY (idPedidoDetalle) REFERENCES PedidoDetalle(idPedidoDetalle),
+	FOREIGN KEY (idFactura) REFERENCES Factura(idFactura),
+);
