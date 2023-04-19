@@ -1,0 +1,49 @@
+CREATE DATABASE DB_PIZZERIA
+
+USE DB_PIZZERIA
+
+CREATE TABLE Cliente (
+  idCliente INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  direccion VARCHAR(100) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  PRIMARY KEY (idCliente)
+);
+
+CREATE TABLE Pizza (
+  idPizza INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(200) NOT NULL,
+  precio DECIMAL(6,2) NOT NULL,
+  PRIMARY KEY (idPizza)
+);
+
+CREATE TABLE Bebida (
+  idBebida INT NOT NULL IDENTITY(1,1),
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(200) NOT NULL,
+  precio DECIMAL(6,2) NOT NULL,
+  PRIMARY KEY (idBebida)
+);
+
+CREATE TABLE Locales (
+  idLocal INT NOT NULL IDENTITY(1,1),
+  direccion VARCHAR(100) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  PRIMARY KEY (idLocal)
+);
+
+CREATE TABLE Pedido (
+  idPedido INT NOT NULL IDENTITY(1,1),
+  idCliente INT NOT NULL,
+  idPizza INT NOT NULL,
+  idBebida INT NOT NULL,
+  idLocal INT NOT NULL,
+  fecha VARCHAR(40) NOT NULL,
+  total DECIMAL(8,2) NOT NULL,
+  PRIMARY KEY (idPedido),
+  FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+  FOREIGN KEY (idPizza) REFERENCES Pizza(idPizza),
+  FOREIGN KEY (idBebida) REFERENCES Bebida(idBebida),
+  FOREIGN KEY (idLocal) REFERENCES Locales(idLocal)
+);
