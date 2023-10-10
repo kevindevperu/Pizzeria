@@ -1,0 +1,56 @@
+Create database ODS_NW
+
+USE ODS_NW
+
+CREATE TABLE ODS_Categorias(
+	CategoryID int primary key,
+	CategoryName nvarchar(30) NULL,
+	Descripcion nvarchar(50) NULL)
+
+CREATE TABLE ODS_Proveedor(
+	SupplierID int primary key,
+	CompanyName nvarchar(40) NOT NULL,
+	ContactName nvarchar(30) NULL,
+	ContactTitle nvarchar(30) NULL,
+	Address nvarchar(60) NULL,
+	City nvarchar(15) NULL,
+	Region nvarchar(15) NULL,
+	PostalCode nvarchar(10) NULL,
+	Country nvarchar(15) NULL,
+	Phone nvarchar(24) NULL,
+	Fax nvarchar(24) NULL,
+	HomePage ntext NULL)
+
+CREATE TABLE ODS_Employees(
+	EmployeeID int primary key,
+	LastName nvarchar(20) NOT NULL,
+	FirstName nvarchar(10) NULL,
+	Title nvarchar(30) NULL,
+	TitleOfCourtesy nvarchar(25) NULL,
+	BirthDate datetime NULL,
+	HireDate datetime NULL,
+	Address nvarchar(60) NULL,
+	City nvarchar(15) NULL,
+	Region nvarchar(15) NULL,
+	PostalCode nvarchar(10) NULL,
+	Country nvarchar(15) NULL,
+	HomePage nvarchar(24) NULL,
+	Extension nvarchar(4) NULL,
+	ReportsTo int NULL)
+
+CREATE TABLE ODS_Producto(
+	ProductID int primary key,
+	ProductName nvarchar(40) NOT NULL,
+	SupplierID int references ODS_Proveedor,
+	CategoryID int references ODS_Categorias,
+	QuaantityPerUnit nvarchar(20) NULL,
+	UnitPrice money NULL,
+	UnitsInStock smallint NULL,
+	UnitsOnOrder smallint NULL,
+	ReorderLevel smallint NULL,
+	Discontinued bit NOT NULL)
+
+CREATE TABLE ODS_Shippers(
+	ShipperID int primary key,
+	CompanyName nvarchar(40) NOT NULL,
+	Phone nvarchar(24) NULL)
